@@ -1,0 +1,2 @@
+# Ybuddy
+Bot Discord
