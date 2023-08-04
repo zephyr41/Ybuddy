@@ -3,9 +3,12 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('insult')
-		.setDescription('Répond avec répartie :)'),
+		.setDescription('Répond avec répartie :)')
+        .addUserOption(option => option.setName('utilisateur').setDescription('L\'utilisateur qui va avoir un beau message :p').setRequired(true)),
 	async execute(interaction) {
-		await interaction.reply(choisirMotAleatoire());
+		const user = interaction.options.getUser('utilisateur');
+        const motInsulte = choisirMotAleatoire();
+		await interaction.reply(`${user} : ${motInsulte}`);
 	}
 };
 
