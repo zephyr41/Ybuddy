@@ -1,4 +1,3 @@
-// createchannel.js
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageActionRow, MessageButton } = require('discord.js');
 
@@ -10,19 +9,8 @@ module.exports = {
 		const member = interaction.member;
 
 		if (!member) {
-			return interaction.reply("Cette commande n'est utilisable que par des membres.");
+			return interaction.reply('Cette commande n\'est utilisable que par des membres.');
 		}
-
-		// Création d'un salon vocal
-		const channel = await interaction.guild.channels.create(`salon-de-${member.user.username}`, {
-			type: 'GUILD_VOICE',
-			permissionOverwrites: [
-				{
-					id: member.user.id,
-					allow: ['CONNECT', 'SPEAK', 'VIEW_CHANNEL'],
-				},
-			],
-		});
 
 		// Création du bouton pour créer un canal privé
 		const button = new MessageButton()
@@ -33,6 +21,8 @@ module.exports = {
 		// Création de la rangée de boutons
 		const row = new MessageActionRow().addComponents(button);
 
-		interaction.reply({ content: `Le salon ${channel.name} a été créé avec succès !`, components: [row] });
+		// Répondre avec un message qui contient le bouton
+		await interaction.reply({ content: 'Cliquez sur le bouton pour créer un canal privé', components: [row] });
 	},
 };
+
