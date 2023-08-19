@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, Guild } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder,ChannelType, PermissionsBitField } = require('discord.js');
 
 module.exports = {
 
@@ -29,9 +29,9 @@ module.exports = {
 
 		collector.on('collect', async i => {
 			if (i.customId === 'confirm') {
-				await interaction.followUp({ content: 'Confirmed!', ephemeral: true });
-				guild.channels.create({
-					name: 'new-channel',
+				await interaction.editReply({ content: 'Confirmed!', ephemeral: true });
+				interaction.guild.channels.create({
+					name: '${interaction.user.username} redirection discord',
 					parent: '1142450128670703646',
 					type: ChannelType.GuildText,
 					permissionOverwrites: [
@@ -45,11 +45,11 @@ module.exports = {
 						},
 					],
 				});
-				await interaction.followUp({ content: 'Channel created!', ephemeral: true });
+				await interaction.editReply({ content: 'Channel created!', ephemeral: true });
 			}
 			
 			else if (i.customId === 'cancel') {
-				await interaction.followUp({ content: 'Canceled!', ephemeral: true });
+				await interaction.editReply({ content: 'Canceled!', ephemeral: true });
 			}
 		},
 		);
