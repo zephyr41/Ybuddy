@@ -31,7 +31,7 @@ module.exports = {
 			if (i.customId === 'confirm') {
 				await interaction.editReply({ content: 'Confirmed!', ephemeral: true });
 				interaction.guild.channels.create({
-					name: '${interaction.user.username} redirection discord',
+					name: `${interaction.user.username} redirection discord`,
 					parent: '1142450128670703646',
 					type: ChannelType.GuildText,
 					permissionOverwrites: [
@@ -45,7 +45,7 @@ module.exports = {
 						},
 					],
 				});
-				await interaction.editReply({ content: 'Channel created!', ephemeral: true });
+				await interaction.editReply({ content: 'Channel crée, il est en dessous de Welcome :)!', ephemeral: true });
 			}
 			
 			else if (i.customId === 'cancel') {
