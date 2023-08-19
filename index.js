@@ -44,5 +44,6 @@ client.on(Events.InteractionCreate, interaction => {
 	}
 });
 
-// Connexion à Discord
+// Conxion à Discord
+console.log('Connecting to Discord...');
 client.login(token);
