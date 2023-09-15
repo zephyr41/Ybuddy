@@ -40,9 +40,10 @@ module.exports = {
                     .setValue('architecture'),
             );
 
+
         const select_class = new StringSelectMenuBuilder()
             .setCustomId('Classynov')
-            .setPlaceholder('Choisis ton année')
+            .setPlaceholder('en quel année est tu ?')
             .addOptions(
                 new StringSelectMenuOptionBuilder()
                     .setLabel('B1')
@@ -66,18 +67,25 @@ module.exports = {
 
             )
 
-            
-
         const row = new ActionRowBuilder()
             .addComponents(select);
-        
-        
+
+
         const row2 = new ActionRowBuilder()
             .addComponents(select_class);
 
+
+        const buttonEmailConfirm = new ButtonBuilder()
+            .setCustomId('confirm')
+            .setLabel('Cliquez ici pour entrer votre adresse email')
+            .setStyle(ButtonStyle.Primary);
+
+        const row3 = new ActionRowBuilder()
+            .addComponents(buttonEmailConfirm);
+
         await interaction.reply({
             content: 'Rentre tes infos :) !',
-            components: [row, row2],
+            components: [row, row2, row3],
         });
     },
 };
