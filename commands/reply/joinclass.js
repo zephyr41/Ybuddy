@@ -7,7 +7,7 @@ module.exports = {
     async execute(interaction) {
         const select = new StringSelectMenuBuilder()
             .setCustomId('starter')
-            .setPlaceholder('Make a selection!')
+            .setPlaceholder('Quel est ta filière ?')
             .addOptions(
                 new StringSelectMenuOptionBuilder()
                     .setLabel('Création & Design')
@@ -40,38 +40,44 @@ module.exports = {
                     .setValue('architecture'),
             );
 
-        // const select_class = new StringSelectMenuBuilder()
-        //     .setCustomId('select_class_ynov')
-        //     .setPlaceholder('Choisis ton année')
-        //     .addOptions(
-        //         new StringSelectMenuOptionBuilder()
-        //             .setLabel('B1')
-        //             .setValue('b1'),
+        const select_class = new StringSelectMenuBuilder()
+            .setCustomId('Classynov')
+            .setPlaceholder('Choisis ton année')
+            .addOptions(
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('B1')
+                    .setValue('b1'),
 
-        //         new StringSelectMenuOptionBuilder()
-        //             .setLabel('B2')
-        //             .setValue('b2'),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('B2')
+                    .setValue('b2'),
 
-        //         new StringSelectMenuOptionBuilder()
-        //             .setLabel('B3')
-        //             .setValue('3emeAnnee'),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('B3')
+                    .setValue('3emeAnnee'),
 
-        //         new StringSelectMenuOptionBuilder()
-        //             .setLabel('M1')
-        //             .setValue('m1'),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('M1')
+                    .setValue('m1'),
 
-        //         new StringSelectMenuOptionBuilder()
-        //             .setLabel('M2')
-        //             .setValue('m2'),
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('M2')
+                    .setValue('m2'),
 
-        //     )
+            )
+
+            
 
         const row = new ActionRowBuilder()
             .addComponents(select);
+        
+        
+        const row2 = new ActionRowBuilder()
+            .addComponents(select_class);
 
         await interaction.reply({
-            content: 'Choose your starter!',
-            components: [row],
+            content: 'Rentre tes infos :) !',
+            components: [row, row2],
         });
     },
 };
