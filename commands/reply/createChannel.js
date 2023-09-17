@@ -43,7 +43,11 @@ module.exports = {
 							id: interaction.user.id,
 							allow: [PermissionsBitField.Flags.ViewChannel],
 						},
-					],
+						{
+							id: interaction.client.user.id,
+							allow: [PermissionsBitField.Flags.ViewChannel],
+						},
+					]
 				});
 				await interaction.editReply({ content: 'Channel crée, il est en dessous de Welcome :)!', ephemeral: true });
 			}
