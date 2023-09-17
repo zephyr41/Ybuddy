@@ -70,7 +70,7 @@ module.exports = {
                 // Envoyer un message avec le bouton "Continuer" dans le salon nouvellement créé
                 await createdChannel.send({ content: `Maintenant, je vais te rediriger vers ton channel`, components: [Continuer] });
 
-                await interaction.editReply({ content: 'Channel créé, il est en dessous de Welcome :)!', ephemeral: true });
+                await interaction.followUp({ content: 'Channel créé, il est en dessous de Welcome :)!', ephemeral: true });
             } else if (i.customId === 'cancel') {
                 await interaction.editReply({ content: 'Annulé !', ephemeral: true });
             }
