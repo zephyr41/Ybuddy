@@ -88,54 +88,23 @@ module.exports = {
 
 
 
-        // réponse à l'utlisateur avec le message incluant le menu déroulant
-        const response = await interaction.reply({
-            content: 'Rentre tes infos :) !',
-            components: [row, row2, row3]
-        });
-        // attend la réponse de l'utilisateur
-
-
-        // Création d'un collecteur pour les interactions sur le menu déroulant
-        const selectMenuCollector1 = interaction.channel.createMessageComponentCollector({
-            componentType: ComponentType.StringSelect,  // Le type de composant (menu déroulant)
-            time: 3_600_000  // Temps pendant lequel le collecteur restera actif (1 heure dans ce cas)
-        });
+        await interaction.reply({
+			content: 'Choose your starter!',
+			components: [row, row2, row3],
+		});
         
-        const selectMenuCollector2 = interaction.channel.createMessageComponentCollector({
-            componentType: ComponentType.StringSelect,  // Le type de composant (menu déroulant)
-            time: 3_600_000  // Temps pendant lequel le collecteur restera actif (1 heure dans ce cas)
-        });
         
-        const buttonCollector = interaction.channel.createMessageComponentCollector({
-            componentType: ComponentType.Button,  // Le type de composant (bouton)
-            time: 3_600_000  // Temps pendant lequel le collecteur restera actif (1 heure dans ce cas)
-        });
         
-        // Attendez les interactions de chaque collecteur
-        selectMenuCollector1.on('collect', async i => {
-           console.log(i.values[0]);
-        });
-        
-        selectMenuCollector2.on('collect', async i => {
-            // Code pour gérer l'interaction du deuxième menu déroulant
-            // Vous pouvez récupérer la sélection et répondre en conséquence ici
-            console.log(i.values[0]);
-        });
-        
-        buttonCollector.on('collect', async i => {
-          
-            console.log("le button à été cliqué ");
-        });
-
-
-    }
+	},
+};
 
 
 
 
+   
 
-}
+
+
 
 // gère l'interaction de manière asynchrone
 
