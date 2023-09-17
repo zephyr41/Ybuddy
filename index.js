@@ -3,7 +3,8 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent] });
+
 
 // Crée une collection pour stocker les commandes
 client.commands = new Collection();
@@ -26,6 +27,7 @@ for (const folder of commandFolders) {
 		}
 	}
 }
+
 
 // Événement lorsqu'une interaction (commande) est créée
 client.on(Events.InteractionCreate, interaction => {
