@@ -46,6 +46,14 @@ client.on(Events.InteractionCreate, interaction => {
 	}
 });
 
+client.on(Events.InteractionCreate, interaction => {
+	if (!interaction.isModalSubmit()) return;
+
+	// Get the data entered by the user
+	const favoriteColor = interaction.fields.getTextInputValue('favoriteColorInput');
+	const hobbies = interaction.fields.getTextInputValue('hobbiesInput');
+	console.log({ favoriteColor, hobbies });
+});
 // Conxion à Discord
 console.log('Connecting to Discord...');
 client.login(token);

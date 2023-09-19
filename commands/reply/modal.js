@@ -1,27 +1,37 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, ChannelType, PermissionsBitField, Events, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } = require('discord.js');
+
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('modal')
-        .setDescription('va permettre de t\'envoyer vers le channel de ta filière buddy ;)'),
+  data: new SlashCommandBuilder()
+    .setName('modal')
+    .setDescription('Permet d\'envoyer vers le channel de la filière'),
 
-    async execute(interaction) {
-        const modal = new ModalBuilder()
-            .setCustomId('modal')
-            .setTitle('Vérification Email')
+  run: async ({ interaction }) => {
+    try {
+      const modal = new ModalBuilder({
+        customId: `myModal-${interaction.user.id}`,
+        title: 'Verification Email',
+      });
 
-        const favoriteColorInput = new TextInputBuilder()
-            .setCustomId('emailUser')
-            // The label is the prompt the user sees for this input
-            .setLabel("Quel est votre adresse Email Ynov ?")
-            .setPlaceholder('prénom.nom@ynov.com')
-            .setStyle(TextInputStyle.Short);
+      const emailUser = new TextInputBuilder({
+        customId: 'emailLabel',
+        label: 'Quel est ton adresse email Ynov ?',
+        placeholder: 'prenom.nom@ynov.com',
+        style: TextInputStyle.Short,
+      });
 
-        const firstActionRow = new ActionRowBuilder().addComponents(favoriteColorInput);
+      const firstActionRow = new ActionRowBuilder().addComponents(emailUser);
+      modal.addComponents(firstActionRow);
 
-        // Add inputs to the modal
-        modal.addComponents(firstActionRow);
+      await interaction.showModal(modal);
 
-        // Show the modal to the user
-        await interaction.showModal(modal);
+      const filter = (modalInteraction) => modalInteraction.customId === `myModal-${interaction.user.id}`;
+      const modalInteraction = await interaction.awaitModalSubmit({ filter, time: 30000 });
+
+      const emailValue = modalInteraction.values.emailLabel;
+      await interaction.reply(`Ton adresse email est ${emailValue}`);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply('Tu n\'as pas répondu à temps !');
     }
-}
+  },
+};
