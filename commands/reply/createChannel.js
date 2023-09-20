@@ -78,6 +78,7 @@ module.exports = {
 				
             } else if (i.customId === 'cancel') {
                 await interaction.followUp({ content: 'Annulé !', ephemeral: true });
+                console.log("Erreur ici ? echec de l'interaction ici ")
             }
         });
     },

@@ -1,41 +1,65 @@
-const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } = require('discord.js');
+// const { ActionRowBuilder, Events, ModalBuilder, TextInputBuilder, TextInputStyle, Client, GatewayIntentBits, SlashCommandBuilder } = require('discord.js');
 
-module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('email')
-        .setDescription('va permettre de confirmer ton email;)'),
-
-    async execute(interaction) {
-        const modal = new ModalBuilder()
-            .setCustomId(`myModal-${interaction.user.id}`)
-            .setTitle('Vérification Email Ynov')
-
-        const emailUser = new TextInputBuilder()
-            .setCustomId('emailLabel')
-            // The label is the prompt the user sees for this input
-            .setLabel("Quel est ton email Ynov?")
-			.setPlaceholder('prenom.nom@ynoc.com')
-            // Short means only a single line of text
-            .setStyle(TextInputStyle.Short);
-
-     
-
-        // An action row only holds one text input,
-        // so you need one action row per text input.
-        const firstActionRow = new ActionRowBuilder().addComponents(emailUser);
+// const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent] });
 
 
-        // Add inputs to the modal
-        modal.addComponents(firstActionRow);
 
-        // Show the modal to the user
-        await interaction.showModal(modal);
-		const filter = (modalInteraction) => modalInteraction.customId === `myModal-${interaction.user.id}`;
-		const modalInteraction = await interaction.awaitModalSubmit({ filter, time: 30000 });
-  
-		const emailUserValue = modalInteraction.fields.getTextInputValue('emailLabel');
-		await interaction.followUp(`Ton adresse email est ${emailUserValue}`);
-	  }, catch (error) {
-		console.error(error);
-	  }
-    }
+
+
+
+// module.exports = {
+//     data: new SlashCommandBuilder()
+//         .setName('email')
+//         .setDescription("Description de la commande email"),
+
+//     async execute(interaction) {
+//         const data = new SlashCommandBuilder()
+//         .setName('email')
+//         .setDescription("va permettre de t'envoyer vers le channel de ta filière");
+
+//     if (interaction.commandName === 'email') {
+//         // Create the modal
+//         const modal = new ModalBuilder()
+//             .setCustomId('myModal')
+//             .setTitle('My Modal');
+
+//         // Add components to modal
+
+//         // Create the text input components
+//         const favoriteColorInput = new TextInputBuilder()
+//             .setCustomId('favoriteColorInput')
+//             .setLabel("What's your favorite color?")
+//             .setStyle(TextInputStyle.Short);
+
+//         const hobbiesInput = new TextInputBuilder()
+//             .setCustomId('hobbiesInput')
+//             .setLabel("What's some of your favorite hobbies?")
+//             .setStyle(TextInputStyle.Paragraph);
+
+//         // An action row only holds one text input,
+//         // so you need one action row per text input.
+//         const firstActionRow = new ActionRowBuilder().addComponents(favoriteColorInput);
+//         const secondActionRow = new ActionRowBuilder().addComponents(hobbiesInput);
+
+//         // Add inputs to the modal
+//         modal.addComponents(firstActionRow, secondActionRow);
+
+//         // Show the modal to the user
+//         await interaction.showModal(modal);
+
+//         // Attend la soumission du formulaire (modal)
+//         const submittedModal = await interaction.awaitModalSubmit();
+
+//         // Récupère les valeurs des champs
+//         const favoriteColorValue = submittedModal.fields.getTextInputValue('favoriteColorInput');
+//         const hobbiesValue = submittedModal.fields.getTextInputValue('hobbiesInput');
+
+//         // Utilise les valeurs récupérées
+//         console.log('Favorite Color:', favoriteColorValue);
+//         console.log('Hobbies:', hobbiesValue);
+
+//         // Répond à l'interaction avec les valeurs récupérées
+//         await interaction.reply(`Tu as choisi ${favoriteColorValue} comme couleur préférée et tes hobbies sont : ${hobbiesValue}`);
+//     }
+//     }
+// };
