@@ -1,3 +1,6 @@
+import { GenerateCode } from './ybuddy/GenerateCode.js';
+
+
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
@@ -26,6 +29,7 @@ for (const folder of commandFolders) {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
 	}
+	
 }
 
 
@@ -38,22 +42,28 @@ client.on(Events.InteractionCreate, interaction => {
 	if (!command) return;
 
 	try {
+		
 		command.execute(interaction);
 	}
 	catch (error) {
 		console.error(error);
 		interaction.reply({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', ephemeral: true });
 	}
+	
 });
 
 
-client.on(Events.InteractionCreate, interaction => {
+client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isModalSubmit()) return;
 
 	// Get the data entered by the user
 	const email = interaction.fields.getTextInputValue('emailTest');
-
+	await interaction.reply({ content: 'Nous t\'avons envoyé un code par email, merci de l\'envoyer dans le chat : ' });
 	console.log({ email });
+	console.log(GenerateCode());
+	
+
 });
 console.log('Connecting to Discord...');
+
 client.login(token);

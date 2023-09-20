@@ -71,7 +71,7 @@ module.exports = {
                  
                 
                 // Envoyer un message avec le bouton "Continuer" dans le salon nouvellement créé
-                await createdChannel.send( 'Maintenant, Envoie un message en écrivant /Email !');
+                await createdChannel.send( 'Maintenant, ** Envoie un message en écrivant /email ! **');
 				
 				
                 await interaction.editReply({ content: 'Channel créé, va en dessous de Welcome :)!', ephemeral: true });
