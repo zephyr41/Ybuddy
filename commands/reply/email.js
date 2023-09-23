@@ -34,25 +34,24 @@ module.exports = {
         const email = `${prenom}.${nom}@ynov.com`;
 
         // Demander le code de confirmation
-        await interaction.reply({
-            content: `Email envoyé à ${email}`,
-            components: [row],
+        await interaction.reply("Veuillez entrer le code de confirmation que vous avez reçu par mail");
+        console.log(interaction.channel.id)
+        const collectorFilter = m => m.author.id === interaction.user.id;
+
+        const collector = new MessageCollector(interaction.channel, collectorFilter, { time: 20_000 });
+
+
+        
+        collector.on('collect', async m => {
+            console.log(`Message collecté : `);
+            // Ajoutez ici votre logique pour réagir au message
+            await interaction.followUp(`Vous avez répondu : ${m.content}`);
         });
-
-        const collectorFilter = m => m.content.includes('discord');
-        const collector = interaction.channel.createMessageCollector({ filter: collectorFilter, time: 15000 });
-
-        collector.on('collect', m => {
-            console.log(`Collected ${m.content}`);
-            if (m.content.includes('discord')) {
-                // Réagir lorsque le message contient "discord"
-                console.log('Message contient "discord":', m.content);
-                // Ajoutez ici votre logique pour réagir au message contenant "discord"
-            }
-        });
-
+        
         collector.on('end', collected => {
-            console.log(`Collected ${collected.size} items`);
+            console.log(`Nombre de messages collectés : ${collected.size}`);
         });
+
     }
-};
+    
+}
