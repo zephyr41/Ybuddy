@@ -1,8 +1,9 @@
-import { GenerateCode } from './ybuddy/GenerateCode.js';
+
 
 
 const fs = require('node:fs');
 const path = require('node:path');
+
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
@@ -54,16 +55,31 @@ client.on(Events.InteractionCreate, interaction => {
 
 
 client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isModalSubmit()) return;
+    if (!interaction.isModalSubmit()) return;
 
-	// Get the data entered by the user
-	const email = interaction.fields.getTextInputValue('emailTest');
-	await interaction.reply({ content: 'Nous t\'avons envoyé un code par email, merci de l\'envoyer dans le chat : ' });
-	console.log({ email });
-	console.log(GenerateCode());
-	
+    // Note: the customId of the modal must match that of the command
+    const command = interaction.client.commands.get(interaction.customId);
 
+    if(!command) {
+        console.error(`No command matching ${interaction.customId} was found`);
+        return;
+    }
+
+    try {
+        await command.handleModal(interaction);
+    }
+    catch(error) {
+        console.log(`Error executing ${interaction.commandName}`);
+        console.log(error);
+        if(interaction.replied || interaction.deferred) {
+            await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+        }
+        else {
+            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+        }
+    }
 });
 console.log('Connecting to Discord...');
 
 client.login(token);
+

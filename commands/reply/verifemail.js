@@ -4,21 +4,20 @@ const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, SlashC
 module.exports = {
     data: new SlashCommandBuilder()
 
-        .setName('email')
-        .setDescription('va permettre de confirmer ton email'),
+        .setName('verifemail')
+        .setDescription('va permettre de vérifier ton email'),
 
-    
     async execute(interaction) {
         
         const modal = new ModalBuilder()
-            .setCustomId('myModal')
+            .setCustomId('VerifEmail')
             .setTitle('Vérification Email Ynov')
 
         const emailUser = new TextInputBuilder()
-            .setCustomId('emailTest')
+            .setCustomId('codeVerif')
             // The label is the prompt the user sees for this input
-            .setLabel("Quel est ton email Ynov?")
-            .setPlaceholder('prenom.nom@ynoc.com')
+            .setLabel("Quel est ton code de vérification Ynov?")
+            .setPlaceholder('ex : 123456')
             // Short means only a single line of text
             .setStyle(TextInputStyle.Short);
 
@@ -34,12 +33,6 @@ module.exports = {
 
         // Show the modal to the user
         await interaction.showModal(modal);
-        await handleModal(interaction);
         
     }
-}
-
-const handleModal = async (interaction) => {
-    const emailUser = interaction.('emailTest');
-    console.log(emailUser);
 }

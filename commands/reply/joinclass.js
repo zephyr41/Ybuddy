@@ -95,10 +95,10 @@ module.exports = {
                 components: [row, row2, row3],
             });
 
-           
 
 
-}
+
+        }
 
     }
 
