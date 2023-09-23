@@ -40,6 +40,6 @@ module.exports = {
 }
 
 const handleModal = async (interaction) => {
-    const emailUser = interaction.('emailTest');
+    
     console.log(emailUser);
 }
