@@ -1,7 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, MessageCollector } = require('discord.js');
-const generateCode = require('../../GenerateCode.js'); // Change the file name to match the actual file name
-
-const sendEmail = require('../../sendmail.js');
+const generateCode = require('../../GenerateCode.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,39 +17,31 @@ module.exports = {
         ),
 
     async execute(interaction) {
-        const linkEmail = new ButtonBuilder()
-            .setLabel('Outlook')
-            .setURL('https://outlook.office.com/mail/inbox')
-            .setStyle(ButtonStyle.Link);
-
-        const row = new ActionRowBuilder()
-            .addComponents(linkEmail);
-
         const prenom = interaction.options.getString('prenom');
         const nom = interaction.options.getString('nom');
 
-        const code = generateCode();
+        const code = generateCode();  // Generate a new confirmation code
         console.log(`Code de confirmation pour ${prenom} ${nom} : ${code}`);
         const email = `${prenom}.${nom}@ynov.com`;
 
-        // Demander le code de confirmation
-        await interaction.reply("Veuillez entrer le code de confirmation que vous avez reçu par mail");
-        console.log(interaction.channel.id)
-        const collectorFilter = m => m.channel.id === interaction.channel.id;
-        const collector = new MessageCollector(interaction.channel, collectorFilter, { time: 20_000 });
+        const collectorFilter = response => {
+            return response.content === code.toLowerCase();  // Compare the user's response to the confirmation code
+        };
 
 
-        
-        collector.on('collect', async m => {
-            console.log(`Message collecté : `);
-            // Ajoutez ici votre logique pour réagir au message
-            await interaction.followUp(`Vous avez répondu : ${m.content}`);
-        });
-        
-        collector.on('end', collected => {
-            console.log(`Nombre de messages collectés : ${collected.size}`);
-        });
-
+        interaction.reply({ content: "Veuillez entrer le code de vérification :", fetchReply: true })
+            .then(() => {
+                interaction.channel.awaitMessages({ filter: collectorFilter, max: 1, time: 10000, errors: ['time'] })
+                    .then(collected => {
+                        interaction.followUp(`${collected.first().author} a correctement répondu au code de confirmation!`);
+                    })
+                    .catch(collected => {
+                        interaction.followUp('Il semble que personne n\'ait entré le bon code de confirmation.');
+                    });
+            })
+            .catch(error => {
+                console.error(error);
+                interaction.followUp('Une erreur est survenue lors de l\'envoi du message.');
+            });
     }
-    
-}
+};
