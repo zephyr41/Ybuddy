@@ -1,45 +1,38 @@
-const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder,Client,GatewayIntentBits,Events } = require('discord.js');
-
+const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } = require('discord.js');
+const generateCode = require('../../generateCode.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-
         .setName('email')
-        .setDescription('va permettre de confirmer ton email'),
+        .setDescription('Permet de confirmer votre email'),
 
-    
     async execute(interaction) {
-        
         const modal = new ModalBuilder()
-            .setCustomId('myModal')
-            .setTitle('Vérification Email Ynov')
+            .setCustomId('email')
+            .setTitle('Vérification Email Ynov');
 
         const emailUser = new TextInputBuilder()
-            .setCustomId('emailTest')
-            // The label is the prompt the user sees for this input
-            .setLabel("Quel est ton email Ynov?")
+            .setCustomId('emailUser')
+            .setLabel('Quel est votre email Ynov?')
             .setPlaceholder('prenom.nom@ynoc.com')
-            // Short means only a single line of text
             .setStyle(TextInputStyle.Short);
 
+        const actionRow = new ActionRowBuilder()
+            .addComponents(emailUser);
 
+        modal.addComponents(actionRow);
 
-        // An action row only holds one text input,
-        // so you need one action row per text input.
-        const firstActionRow = new ActionRowBuilder().addComponents(emailUser);
-
-
-        // Add inputs to the modal
-        modal.addComponents(firstActionRow);
-
-        // Show the modal to the user
         await interaction.showModal(modal);
-        await handleModal(interaction);
-        
     }
 }
-
-const handleModal = async (interaction) => {
+async function handleModal(interaction) {
+    if (!interaction.isModalSubmit()) return;
     
-    console.log(emailUser);
-}
+	if (interaction.customId === 'email') {
+		await interaction.followUp({ content: 'Your submission was received successfully!' });
+	}
+    const emailUser = interaction.fields.getTextInputValue('emailUser');
+    const code = generateCode();
+  }
+
+module.exports.handleModal = handleModal;

@@ -1,6 +1,5 @@
 
-
-function GenerateCode() {
+function generateCode() {
     var code = "";
     var possible = "0123456789";
     for (var i = 0; i < 6; i++)
@@ -8,4 +7,4 @@ function GenerateCode() {
     return code;
     }
 
-module.exports = GenerateCode
+module.exports = generateCode
