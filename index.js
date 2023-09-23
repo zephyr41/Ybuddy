@@ -4,7 +4,7 @@ const { Client, Collection, GatewayIntentBits, Events } = require('discord.js');
 const { token } = require('./config.json');  // Importation du 'token' à partir du fichier 'config.json'
 
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });  // Création d'un nouveau client Discord avec les intentions spécifiées
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions] });  // Création d'un nouveau client Discord avec les intentions spécifiées
 
 client.commands = new Collection();  // Création d'une collection pour stocker les commandes
 

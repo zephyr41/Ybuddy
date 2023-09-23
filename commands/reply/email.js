@@ -1,5 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, MessageCollector } = require('discord.js');
-const generateCode = require('../../generateCode.js');
+const generateCode = require('../../GenerateCode.js'); // Change the file name to match the actual file name
+
 const sendEmail = require('../../sendmail.js');
 
 module.exports = {
@@ -36,8 +37,7 @@ module.exports = {
         // Demander le code de confirmation
         await interaction.reply("Veuillez entrer le code de confirmation que vous avez reçu par mail");
         console.log(interaction.channel.id)
-        const collectorFilter = m => m.author.id === interaction.user.id;
-
+        const collectorFilter = m => m.channel.id === interaction.channel.id;
         const collector = new MessageCollector(interaction.channel, collectorFilter, { time: 20_000 });
 
 
