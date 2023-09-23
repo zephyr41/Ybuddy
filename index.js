@@ -65,9 +65,9 @@ client.on(Events.InteractionCreate, async interaction => {
     console.log(`Erreur lors de l'exécution de ${interaction.commandName}`);
     console.log(error);
     if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content: 'Code en cours de génération...', ephemeral: true });
+      await interaction.followUp({ content: 'Erreur lors de l\'execution', ephemeral: true });
     } else {
-      await interaction.reply({ content: 'code en cours de génération...', ephemeral: true });
+      await interaction.reply({ content: 'Erreur lors de l\'execution', ephemeral: true });
     }
   }
 });

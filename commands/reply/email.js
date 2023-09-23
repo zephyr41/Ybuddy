@@ -26,13 +26,10 @@ module.exports = {
     }
 }
 async function handleModal(interaction) {
-    if (!interaction.isModalSubmit()) return;
-    
-	if (interaction.customId === 'email') {
-		await interaction.followUp({ content: 'Your submission was received successfully!' });
-	}
-    const emailUser = interaction.fields.getTextInputValue('emailUser');
-    const code = generateCode();
-  }
+    const emailer = interaction.fields.getTextInputValue('emailUser');
+    console.log(emailer);
+    await interaction.reply({ content: `Votre email est ${emailer}`, ephemeral: true });
+}
+
 
 module.exports.handleModal = handleModal;
