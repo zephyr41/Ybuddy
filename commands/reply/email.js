@@ -1,46 +1,58 @@
-const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } = require('discord.js');
-const nodemailer = require('nodemailer');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, MessageCollector } = require('discord.js');
 const generateCode = require('../../generateCode.js');
 const sendEmail = require('../../sendmail.js');
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('email')
-        .setDescription('Permet de confirmer votre email'),
+        .setDescription('Permet de confirmer votre email')
+        .addStringOption(option => option
+            .setName('prenom')
+            .setDescription('Votre prénom')
+            .setRequired(true)
+        )
+        .addStringOption(option => option
+            .setName('nom')
+            .setDescription('Votre nom')
+            .setRequired(true)
+        ),
 
     async execute(interaction) {
-        const modal = new ModalBuilder()
-            .setCustomId('email')
-            .setTitle('Vérification Email Ynov');
+        const linkEmail = new ButtonBuilder()
+            .setLabel('Outlook')
+            .setURL('https://outlook.office.com/mail/inbox')
+            .setStyle(ButtonStyle.Link);
 
-        const emailUser = new TextInputBuilder()
-            .setCustomId('emailUser')
-            .setLabel('Quel est votre email Ynov?')
-            .setPlaceholder('prenom.nom@ynoc.com')
-            .setStyle(TextInputStyle.Short);
+        const row = new ActionRowBuilder()
+            .addComponents(linkEmail);
 
-        const actionRow = new ActionRowBuilder()
-            .addComponents(emailUser);
+        const prenom = interaction.options.getString('prenom');
+        const nom = interaction.options.getString('nom');
 
-        modal.addComponents(actionRow);
-
-        await interaction.showModal(modal);
-    }
-}
-async function handleModal(interaction) {
-    const emailer = interaction.fields.getTextInputValue('emailUser');
-    const emailRegex = /@ynov\.com$/;  // Expression régulière pour vérifier la terminaison du domaine
-
-    if (emailRegex.test(emailer)) {
-        // L'email se termine par '@ynov.com'
         const code = generateCode();
-        sendEmail(emailer, code);
+        console.log(`Code de confirmation pour ${prenom} ${nom} : ${code}`);
+        const email = `${prenom}.${nom}@ynov.com`;
 
-        await interaction.reply({ content: `J'ai envoyé un email à ${emailer}`, ephemeral: true });
-    } else {
-        // L'email ne se termine pas par '@ynov.com'
-        await interaction.reply({ content: 'Veuillez saisir une adresse email se terminant par @ynov.com. taper la commande /email pour ressayer', ephemeral: true });
+        // Demander le code de confirmation
+        await interaction.reply({
+            content: `Email envoyé à ${email}`,
+            components: [row],
+        });
+
+        const collectorFilter = m => m.content.includes('discord');
+        const collector = interaction.channel.createMessageCollector({ filter: collectorFilter, time: 15000 });
+
+        collector.on('collect', m => {
+            console.log(`Collected ${m.content}`);
+            if (m.content.includes('discord')) {
+                // Réagir lorsque le message contient "discord"
+                console.log('Message contient "discord":', m.content);
+                // Ajoutez ici votre logique pour réagir au message contenant "discord"
+            }
+        });
+
+        collector.on('end', collected => {
+            console.log(`Collected ${collected.size} items`);
+        });
     }
-}
-
-
-module.exports.handleModal = handleModal;
+};

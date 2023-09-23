@@ -46,30 +46,4 @@ for (const file of eventFiles) {
   }
 }
 
-// Écoute des interactions et gestion des modaux
-client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isModalSubmit()) return;  // Si ce n'est pas une soumission de modal, retourner
-
-  // Remarque : le customId du modal doit correspondre à celui de la commande
-  const command = interaction.client.commands.get(interaction.customId);  // Obtention de la commande en fonction du customId
-  console.log(command);
-
-  if (!command) {
-    console.error(`Aucune commande correspondant à ${interaction.customId} n'a été trouvée`);
-    return;
-  }
-
-  try {
-    await command.handleModal(interaction);  // Appel de la fonction handleModal de la commande
-  } catch (error) {
-    console.log(`Erreur lors de l'exécution de ${interaction.commandName}`);
-    console.log(error);
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content: 'Erreur lors de l\'execution', ephemeral: true });
-    } else {
-      await interaction.reply({ content: 'Erreur lors de l\'execution', ephemeral: true });
-    }
-  }
-});
-
 client.login(token);  // Connexion du client en utilisant le token fourni
