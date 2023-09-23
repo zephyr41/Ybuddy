@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const email = require('./commands/reply/email');
+
 
 async function sendEmail(emailUser,codeUser) {
     // Créer un transporteur SMTP réutilisable à l'aide des paramètres SMTP
@@ -18,7 +18,7 @@ async function sendEmail(emailUser,codeUser) {
         from: 'YBUDDY <ybuddyEmail@example.com>',
         to: emailUser,
         subject: 'Votre mot de passe',
-        text: `Votre mot de passe est "" `, codeUser,
+        text: `Votre mot de passe est ${codeUser} `,
     };
 
     // Envoi de l'e-mail
@@ -26,3 +26,5 @@ async function sendEmail(emailUser,codeUser) {
 
     console.log('Message sent: %s', info.messageId);
 }
+
+module.exports = sendEmail;
