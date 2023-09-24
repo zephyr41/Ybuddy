@@ -43,7 +43,7 @@ module.exports = {
 
 
                 await interaction.guild.channels.create({
-                    name: "Général",
+                    name: "📣 ┊ Général",
                     type: ChannelType.GuildText,
                     parent: category.id,
                     permissionOverwrites: [
@@ -55,7 +55,7 @@ module.exports = {
                 });
 
                 await interaction.guild.channels.create({
-                    name: "Documentation",
+                    name: " 🖇️ ┊ Référence",
                     type: ChannelType.GuildText,
                     parent: category.id,
                     permissionOverwrites: [
@@ -66,7 +66,7 @@ module.exports = {
                     ]
                 });
                 await interaction.guild.channels.create({
-                    name: "Ressources",
+                    name: " 🚀 ┊ Projet",
                     type: ChannelType.GuildText,
                     parent: category.id,
                     permissionOverwrites: [
