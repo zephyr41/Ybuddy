@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 const filiereNoms = ["CREA", "AUDIOVISUEL", "MARCOM", "3D ANIM", "INFO", "ARCHI"];
+const classeNoms = ["B1", "B2", "B3", "M1", "M2"];
+
 const filiereRolesColors = {
     "CREA": "#FF7F7F", // Rouge clair
     "AUDIOVISUEL": "#7FFF7F", // Vert clair
@@ -27,20 +29,23 @@ module.exports = {
                 .then(role => role.permissions.toArray());
 
             for (const filiereNom of filiereNoms) {
-                const roleName = filiereNom;
-                const roleColor = filiereRolesColors[filiereNom];
+                for (const classeNom of classeNoms) {
+                    const roleName = `${filiereNom} - ${classeNom}`;
+                    const roleColor = filiereRolesColors[filiereNom]; // Utiliser filiereNom comme clé
 
-                const existingRole = guild.roles.cache.find(role => role.name === roleName);
 
-                if (!existingRole) {
-                    const createdRole = await guild.roles.create({
-                        name: roleName,
-                        color: roleColor,
-                        reason: 'Création des rôles pour chaque filière',
-                        
-                    });
+                    const existingRole = guild.roles.cache.find(role => role.name === roleName);
 
-                    await createdRole.setPermissions(everyonePermissions);
+                    if (!existingRole) {
+                        const createdRole = await guild.roles.create({
+                            name: roleName,
+                            color: roleColor,
+                            reason: 'Création des rôles pour chaque filière',
+
+                        });
+
+                        await createdRole.setPermissions(everyonePermissions);
+                    }
                 }
             }
 

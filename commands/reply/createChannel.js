@@ -37,7 +37,7 @@ module.exports = {
 				// permet de crée le nom du channel, et l'associe à une variable
                 const createdChannel = await interaction.guild.channels.create({
                     name: `${interaction.user.username} redirection discord`,
-                    parent: '1142450128670703646',
+                    parent: '1155533038944526467',
                     type: ChannelType.GuildText,
                     permissionOverwrites: [
                         {
@@ -53,7 +53,7 @@ module.exports = {
                             ],
                         },
                         {
-                            id: '1136102459023044648', // donne accès a Ybyddg à son channel des droits
+                            id: '1155453690988216380', // donne accès a Ybyddg à son channel des droits
                             allow: [
                                 PermissionsBitField.Flags.ViewChannel,
                                 PermissionsBitField.Flags.SendMessages,
