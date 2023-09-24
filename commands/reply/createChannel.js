@@ -83,3 +83,49 @@ module.exports = {
         });
     },
 };
+
+/**
+ * client.on('messageCreate', async message => {
+  if (message.content === '!createAllChannels') {
+    // Pour chaque classe
+    for (const className of classes) {
+      // Créer la catégorie pour la classe
+      const category = await message.guild.channels.create(className, {
+        type: 'GUILD_CATEGORY',
+        permissionOverwrites: [
+          {
+            id: message.guild.roles.everyone,
+            deny: ['VIEW_CHANNEL'],
+          },
+        ],
+      });
+
+      // Canaux à créer dans chaque classe
+      const channelsToCreate = [
+        { name: '📣┊général', type: 'GUILD_TEXT' },
+        { name: '📎┊références', type: 'GUILD_TEXT' },
+        { name: '📚┊projet', type: 'GUILD_TEXT' },
+        { name: 'Vocal 1', type: 'GUILD_VOICE' },
+        { name: 'Vocal 2', type: 'GUILD_VOICE' },
+      ];
+
+      // Créer chaque canal dans la catégorie
+      for (const channelInfo of channelsToCreate) {
+        const newChannel = await message.guild.channels.create(channelInfo.name, {
+          type: channelInfo.type,
+          parent: category,
+          permissionOverwrites: [
+            {
+              id: message.guild.roles.everyone,
+              deny: ['VIEW_CHANNEL'],
+            },
+          ],
+        });
+
+        console.log(`Channel créé : ${newChannel.name}`);
+      }
+    }
+
+    message.channel.send('Tous les canaux ont été créés.');
+  }
+ */

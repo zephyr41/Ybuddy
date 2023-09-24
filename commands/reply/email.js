@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, MessageCollector,StringSelectMenuBuilder,StringSelectMenuOptionBuilder  } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, MessageCollector,StringSelectMenuBuilder,StringSelectMenuOptionBuilder,ComponentType  } = require('discord.js');
 const generateCode = require('../../GenerateCode.js');
 const sendEmail = require('../../sendmail.js');
 const verificationCode = false
@@ -10,12 +10,12 @@ module.exports = {
             .setName('prenom')
             .setDescription('Votre prénom')
             .setRequired(true)
+        )
+        .addStringOption(option => option
+            .setName('nom')
+            .setDescription('Votre nom')
+            .setRequired(true)
         ),
-        // .addStringOption(option => option
-        //     .setName('nom')
-        //     .setDescription('Votre nom')
-        //     .setRequired(true)
-        // ),
 
     async execute(interaction) {
         const prenom = interaction.options.getString('prenom');
@@ -25,7 +25,7 @@ module.exports = {
         console.log(`Code de confirmation pour ${prenom} ${nom} : ${code}`);
         const email = `${prenom}.${nom}@ynov.com`;
         console.log(`Email de confirmation pour ${prenom} ${nom} : ${email}`);
-       // sendEmail(email, code);  // Send the confirmation code to the user's email
+        sendEmail(email, code);  // Send the confirmation code to the user's email
         const collectorFilter = response => {
             return response.content === code.toLowerCase();  // Compare the user's response to the confirmation code
         };
@@ -103,22 +103,25 @@ module.exports = {
                                 .addComponents(select);
                 
                             const row2 = new ActionRowBuilder()
-                                .addComponents(select_class);
-                
-                            const buttonEmailConfirm = new ButtonBuilder()
-                                .setCustomId('confirmEmail')
-                                .setLabel('Cliquez ici pour entrer votre adresse email')
-                                .setStyle(ButtonStyle.Primary);
-                
-                           
-                
-                
-                
+                                .addComponents(select_class);                
                              interaction.followUp({
                                 content: 'Choose your starter!',
                                 components: [row, row2,],
                             });
                 
+                            const collector2 = interaction.channel.createMessageComponentCollector({ componentType: ComponentType.SELECT_MENU, time: 3_600_000 });
+
+
+                            collector2.on('collect', async i => {
+                                const selection = i.values[0];
+                                const selection2 = i.values[1];
+                                 interaction.followUp(`${i.user} est ajouté au channel ${selection}!`);
+                                 interaction.followUp(`${i.user} est ajouté au channel ${selection2}!`);
+                                 if (selection = 'creationDesign'){
+                                    interaction.member.roles.add('891164116172867092');
+                                }
+                            });
+                            
                 
                 
                 
