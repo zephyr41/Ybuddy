@@ -1,7 +1,7 @@
 const { ActionRowBuilder, ButtonBuilder, GatewayIntentBits, SlashCommandBuilder, Client, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ComponentType } = require('discord.js');
 const generateCode = require('../../GenerateCode.js');
 const sendEmail = require('../../sendmail.js');
-const { EMPTY } = require('sqlite3');
+
 
 
 
@@ -32,12 +32,12 @@ module.exports = {
         console.log(`Code de confirmation pour ${prenom} ${nom} : ${code}`);
         const email = `${prenom}.${nom}@ynov.com`;
         console.log(`Email de confirmation pour ${prenom} ${nom} : ${email}`);
-        // sendEmail(email, code);  // Send the confirmation code to the user's email
+        // sendEmail(email, code);  // en com pour éviter la polution :D a la place généré dans la console pour phase de test
         const collectorFilter = response => {
             return response.content === code.toLowerCase();  // Compare the user's response to the confirmation code
         };
 
-        interaction.editReply({ content: "Veuillez entrer le code de vérification :", fetchReply: true })
+        interaction.editReply({ content: "Veuillez entrer le code de vérification envoyé par email :", fetchReply: true })
             .then(() => {
                 interaction.channel.awaitMessages({ filter: collectorFilter, max: 1, time: 30000, errors: ['time'] })
                     .then(collected => {

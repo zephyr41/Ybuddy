@@ -30,6 +30,7 @@ module.exports = {
         });
 		// permet de venir récupéré l'id de l'utilisateur
         const filter = i => i.user.id === interaction.user.id;
+      
         const collector = interaction.channel.createMessageComponentCollector({ filter, time: 30000 });
 		// permet de venir récolter plusieurs informations de manière asynchrone (ici nous attendons plusieurs chose que nous voulons collecter, la liste des buttosn)
         collector.on('collect', async i => {
