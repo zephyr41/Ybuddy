@@ -38,11 +38,11 @@ module.exports = {
 				// permet de crée le nom du channel, et l'associe à une variable
                 const createdChannel = await interaction.guild.channels.create({
                     name: `${interaction.user.username} redirection discord`,
-                    parent: '1155533038944526467',
+                    parent: '1155925598812766228', // ID de la catégorie "ou on veut redirigeer" ici RTEST
                     type: ChannelType.GuildText,
                     permissionOverwrites: [
                         {
-                            id: '1004015076002504715', // ID du rôle "everyone" permet de masquer le channel sur tout le monde 
+                            id: '1155453304659259472', // ID du rôle "everyone" permet de masquer le channel sur tout le monde 
                             deny: [PermissionsBitField.Flags.ViewChannel],
                         },
                         {
