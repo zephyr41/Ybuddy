@@ -28,59 +28,35 @@ Pour démarrer avec ce bot, suivez ces étapes :
 1. **Cloner le dépôt** : 
    ```bash
    git clone https://github.com/[username]/ynov-campus-discord-bot.git
-Installer les dépendances :
+   ```
+### Installer les dépendances :
 
-bash
-Copy code
+```bash
 npm install
-# ou
-yarn install
-Configurer le bot :
-Créez un fichier config.json avec votre token de bot et d'autres paramètres.
+```
+ou
+```yarn install ```
 
-Exécuter le bot :
+### Configurer le bot :
+- **Créez un fichier config.json avec votre token de bot et d'autres paramètres.**
 
-bash
-node index.js
-Configuration
+- **Configuration**
 Le bot nécessite un fichier config.json avec les paramètres suivants :
 
-token : Votre token de bot à partir du portail des développeurs Discord.
-email : L'adresse e-mail utilisée pour la vérification.
-emailPassword : Le mot de passe pour l'adresse e-mail.
-Commandes
+- token : Votre token de bot à partir du portail des développeurs Discord.
+- email : L'adresse e-mail utilisée pour la vérification.
+- emailPassword : Le mot de passe pour l'adresse e-mail.
+
+#### Commandes
 Le bot répond aux commandes suivantes :
 
-!createchannel <nomDuCanal> : Créer un nouveau canal.
-!deletechannel <nomDuCanal> : Supprimer un canal.
-!createrole <nomDuRôle> : Créer un nouveau rôle.
-!deleterole <nomDuRôle> : Supprimer un rôle.
-!assignrole <nomDeLUtilisateur> <nomDuRôle> : Attribuer un rôle à un utilisateur.
-!verify <adresseEmail> : Envoyer un e-mail de vérification à un utilisateur.
-Licence
+- !createchannel <nomDuCanal> : Créer un nouveau canal.
+- !deletechannel <nomDuCanal> : Supprimer un canal.
+- !createrole <nomDuRôle> : Créer un nouveau rôle.
+- !deleterole <nomDuRôle> : Supprimer un rôle.
+- !assignrole <nomDeLUtilisateur> <nomDuRôle> : Attribuer un rôle à un utilisateur.
+- !verify <adresseEmail> : Envoyer un e-mail de vérification à un utilisateur.
+
+
+#### Licence
 Ce projet est sous licence MIT. Voir LICENSE pour plus d'informations.
-
-Remerciements
-discord.js : Une bibliothèque JavaScript pour interagir avec l'API Discord.
-Node.js : Un environnement d'exécution JavaScript.
-Contributions
-Les contributions sont les bienvenues ! Si vous souhaitez contribuer à ce projet, suivez ces étapes :
-
-Forker le dépôt :
-
-bash
-Copy code
-git fork https://github.com/[username]/ynov-campus-discord-bot.git
-Créer une nouvelle branche :
-
-bash
-Copy code
-git checkout -b [nomDeLaBranche]
-Faire des modifications :
-Décrivez brièvement les modifications que vous souhaitez apporter.
-
-Soumettre une demande de tirage :
-
-bash
-Copy code
-git push origin [nomDeLaBranche]
